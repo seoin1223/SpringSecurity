@@ -5,12 +5,20 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 
 @Configuration // IoC 빈(bean)을 등록
 @EnableWebSecurity //스프링 시큐리티 필터가 스프링 필터체인에 등록
 public class SecurityConfig {
+
+
+    @Bean // 해당 메서드의 리턴되는 오브젝트를 IoC로 등록해준다.
+    public BCryptPasswordEncoder encodePwd(){
+        return new BCryptPasswordEncoder();
+    }
+
     /*
     기존: WebSecurityConfigurerAdapter를 상속하고 configure매소드를 오버라이딩하여 설정하는 방법
     => 현재: SecurityFilterChain을 리턴하는 메소드를 빈에 등록하는 방식(컴포넌트 방식으로 컨테이너가 관리)
@@ -40,7 +48,7 @@ public class SecurityConfig {
                 )
                 .formLogin(login ->
                         login
-                                .loginPage("/login") // 사용자 지정 로그인 페이지 URL 설정
+                                .loginPage("/loginForm") // 사용자 지정 로그인 페이지 URL 설정
                                 //.defaultSuccessUrl("/view/dashboard", true) // 성공 시 대시보드로 이동
                                 //.permitAll() // 로그인 페이지는 모든 사용자에게 허용됩니다
                 );
