@@ -41,7 +41,7 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize ->
                         authorize
-                                .requestMatchers("/user/**").authenticated() // "/user/**"로 시작하는 요청은 인증이 필요합니다
+                                .requestMatchers("/user/**").authenticated() // "/user/**"로 시작하는 요청은 인증이 필요합니다 authenticated() : 인증만 되면 들어갈 수 있는 주소!
                                 .requestMatchers("/manager/**").hasAnyRole("ADMIN", "MANAGER") // "/manager/**"로 시작하는 요청은 "ADMIN" 또는 "MANAGER" 역할이 필요합니다
                                 .requestMatchers("/admin/**").hasAnyRole("ADMIN") // "/admin/**"로 시작하는 요청은 "ADMIN" 역할이 필요합니다
                                 .anyRequest().permitAll() // 다른 모든 요청은 인증 없이 허용됩니다
@@ -49,7 +49,11 @@ public class SecurityConfig {
                 .formLogin(login ->
                         login
                                 .loginPage("/loginForm") // 사용자 지정 로그인 페이지 URL 설정
-                                //.defaultSuccessUrl("/view/dashboard", true) // 성공 시 대시보드로 이동
+                                .loginProcessingUrl("/login") // login 주소가 호출이 되면 시큐리티가 낚아채서 대신 로그인을 진행
+                                // 시큐리티가 대신 login url을 처리함
+//                               //  .usernameParameter("username2")
+                                .defaultSuccessUrl("/", true) // 성공 시 대시보드로 이동
+                                // true는 항상 지정된 URL로 리다이렉트할 것인지 여부, false로 설정하면 사용자가 직전에 접근한 페이지로 리다이렉트됩니다.
                                 //.permitAll() // 로그인 페이지는 모든 사용자에게 허용됩니다
                 );
         return http.build(); // 구성된 SecurityFilterChain 반환
