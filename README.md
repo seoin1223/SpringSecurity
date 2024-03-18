@@ -106,3 +106,11 @@
     </details>
 
 
+### 2. Oauth 
+1. OAuth -> open Auth : 인증 처리를 대신한다.
+2. 인증 : CallBack code 받는 것
+3. 권한 : Access Token 받는 것
+4. Resource owner : 사용자
+5. client : 사업 페이지 -> OAuth-client Lib 는 facebook. google 만 채택
+6. OAuth(인증) Server : API 서버 (포탈)
+7. Resource Server : 자원 서버
