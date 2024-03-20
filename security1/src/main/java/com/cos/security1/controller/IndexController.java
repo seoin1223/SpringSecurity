@@ -47,6 +47,7 @@ public class IndexController {
     }
 
 
+
     @GetMapping({"","/"})
     public String index(){
         // 기본폴더 src/main/resources/
@@ -54,8 +55,10 @@ public class IndexController {
         return "index";
     }
 
+    // OAuth 로그인해도 PrincipalDetails 로 받을 수 있게 됨
     @GetMapping("/user")
-    public @ResponseBody String user(){
+    public @ResponseBody String user(@AuthenticationPrincipal PrincipalDetails principalDetails){
+        System.out.println("PrincipalDetails : "+ principalDetails.getUser());
         return "user";
     }
 
