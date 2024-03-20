@@ -1,5 +1,7 @@
 package com.cos.security1.config;
 
+import com.cos.security1.config.oauth.PrincipalOauth2UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -15,6 +17,9 @@ import org.springframework.security.web.SecurityFilterChain;
 //  securedEnable = ture : secured 어노테이션 활성화
 // prePostEnabled = true : preAuthorize, postAuthorize 어노테이션 활성화
 public class SecurityConfig {
+
+    @Autowired
+    private PrincipalOauth2UserService principalOauth2UserService;
 
 
     @Bean // 해당 메서드의 리턴되는 오브젝트를 IoC로 등록해준다.
@@ -61,8 +66,11 @@ public class SecurityConfig {
                 )
                 .oauth2Login(login ->
                         login
-                                .loginPage("/loginForm") // 구글 로그인이 완료된 후처리
+                                .loginPage("/loginForm") // 구글 로그인이 완료된 후 처리가 필요
+                                // TIP. 코드 x , (엑세스 토큰 + 사용자 프로필 정보 0)
+                                .userInfoEndpoint(userInfo -> userInfo.userService(principalOauth2UserService))
                                 .defaultSuccessUrl("/",true)
+
                 );
         return http.build(); // 구성된 SecurityFilterChain 반환
     }
@@ -73,4 +81,13 @@ public class SecurityConfig {
 
 /*
  * error 403 : 접근 권환 없음
+ * */
+
+
+/* OAuth2
+ * 1. 코드 받기 (인증)
+ * 2. 엑서스 토큰 (권한)
+ * 3. 사용자 프로필 정보를 가져옴
+ * 4-1. 그 정보를 토대로 회원가입을 자동으로 진행시키게 됨
+ * 4-2. 추가적인 정보가 필요할 경우 자동으로 진행이 아닌 추가적인 회원정보를 입력받음
  * */
