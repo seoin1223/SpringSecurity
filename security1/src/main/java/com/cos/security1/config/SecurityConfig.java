@@ -1,5 +1,6 @@
 package com.cos.security1.config;
 
+import com.cos.security1.config.oauth.CustomBCryptPasswordEncoder;
 import com.cos.security1.config.oauth.PrincipalOauth2UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -21,11 +22,15 @@ public class SecurityConfig {
     @Autowired
     private PrincipalOauth2UserService principalOauth2UserService;
 
+    @Autowired
+    private CustomBCryptPasswordEncoder customBCryptPasswordEncoder;
 
+
+/*
     @Bean // 해당 메서드의 리턴되는 오브젝트를 IoC로 등록해준다.
     public BCryptPasswordEncoder encodePwd(){
         return new BCryptPasswordEncoder();
-    }
+    }*/
 
     /*
     기존: WebSecurityConfigurerAdapter를 상속하고 configure매소드를 오버라이딩하여 설정하는 방법
