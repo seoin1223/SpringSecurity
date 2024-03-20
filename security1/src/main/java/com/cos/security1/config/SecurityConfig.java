@@ -59,8 +59,11 @@ public class SecurityConfig {
                                 // true는 항상 지정된 URL로 리다이렉트할 것인지 여부, false로 설정하면 사용자가 직전에 접근한 페이지로 리다이렉트됩니다.
                                 //.permitAll() // 로그인 페이지는 모든 사용자에게 허용됩니다
                 )
-//                .oauth
-        ;
+                .oauth2Login(login ->
+                        login
+                                .loginPage("/loginForm") // 구글 로그인이 완료된 후처리
+                                .defaultSuccessUrl("/",true)
+                );
         return http.build(); // 구성된 SecurityFilterChain 반환
     }
 
@@ -70,6 +73,4 @@ public class SecurityConfig {
 
 /*
  * error 403 : 접근 권환 없음
- *
- *
  * */
