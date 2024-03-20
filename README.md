@@ -117,3 +117,6 @@
 8. UserDetails 차이 : 스프링 시큐리티는 자신만의 session 가짐
    - UserDetails : 일반로그인
    - OAuth2User : OAuth 로그인
+9. PrincipalDetails 필요한 이유
+   - Security Session 에는 Authentication 객체만 가짐
+   - Authentication 객체는 OAuth2User 와 UserDetails 만을 포함할 수 있음
