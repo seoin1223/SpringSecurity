@@ -140,7 +140,10 @@
 ### 3. JWT
 1. JWT 
    - Json WEB Token
-
+   - JSON 객체로 안전하게 전송하기 위한 컴팩트하고 독립적인 방식을 정의하는 개방형 표준(RFC7519)
+   - 디지털 서명 사용
+   - xxxx(Header),yyyy(Payload),zzzz(Signature)
+![img.png](img.png)
 <br>
 
 2. session 
